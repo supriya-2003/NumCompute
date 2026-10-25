@@ -1,0 +1,5 @@
+numpy>=1.23
+# development / demo
+pytest>=7
+jupyter
+matplotlib
