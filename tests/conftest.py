@@ -10,11 +10,13 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 @pytest.fixture
 def rng():
+    """Provide a seeded random number generator for reproducible tests."""
     return np.random.default_rng(12345)
 
 
 @pytest.fixture
 def csv_file(tmp_path):
+    """Create a sample CSV file with numeric, categorical, and missing values."""
     p = tmp_path / "data.csv"
     p.write_text(
         "a,b,c,label\n"

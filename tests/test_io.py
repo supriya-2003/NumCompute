@@ -5,6 +5,7 @@ from numcompute.io import count_missing, iter_csv_chunks, read_csv, read_csv_col
 
 
 def test_read_csv_numeric_fills_nan(csv_file):
+    """Check numeric CSV loading and handling of missing values."""
     X, cols = read_csv(csv_file, usecols=["a", "b", "label"])
     assert cols == ["a", "b", "label"]
     assert X.shape == (4, 3)
@@ -13,6 +14,7 @@ def test_read_csv_numeric_fills_nan(csv_file):
 
 
 def test_read_csv_custom_fill_and_drop(csv_file):
+    """Test replacing missing values and dropping incomplete rows."""
     X, _ = read_csv(csv_file, usecols=[0, 1], fill_value=-1)
     assert X[1, 1] == -1 and X[2, 0] == -1
     Xd, _ = read_csv(csv_file, usecols=[0, 1], drop_missing=True)
@@ -20,6 +22,7 @@ def test_read_csv_custom_fill_and_drop(csv_file):
 
 
 def test_read_csv_string_and_tab_delimiter(tmp_path):
+    """Check string data loading with a tab-separated file."""
     p = tmp_path / "d.tsv"
     p.write_text("name\tscore\nann\t3\nbob\t\n")
     S, cols = read_csv(p, delimiter="\t", dtype=str, fill_value="?")
@@ -28,6 +31,7 @@ def test_read_csv_string_and_tab_delimiter(tmp_path):
 
 
 def test_read_csv_single_row_is_2d(tmp_path):
+    """Ensure a single data row retains its two-dimensional shape."""
     p = tmp_path / "one.csv"
     p.write_text("x,y\n1,2\n")
     X, _ = read_csv(p)
@@ -35,6 +39,7 @@ def test_read_csv_single_row_is_2d(tmp_path):
 
 
 def test_read_csv_errors(tmp_path, csv_file):
+    """Verify errors for missing files, unknown columns, and empty data."""
     with pytest.raises(FileNotFoundError):
         read_csv(tmp_path / "missing.csv")
     with pytest.raises(KeyError):
@@ -46,12 +51,14 @@ def test_read_csv_errors(tmp_path, csv_file):
 
 
 def test_read_csv_columns_type_inference(csv_file):
+    """Check column-wise loading and automatic data type inference."""
     cols = read_csv_columns(csv_file)
     assert cols["a"].dtype == float and np.isnan(cols["a"][2])
     assert cols["c"].dtype.kind == "U" and cols["c"][3] == ""
 
 
 def test_iter_csv_chunks_matches_full_read(tmp_path, rng):
+    """Verify chunked CSV reading matches the complete dataset."""
     data = rng.normal(size=(103, 3))
     p = tmp_path / "big.csv"
     np.savetxt(p, data, delimiter=",", header="a,b,c", comments="")
@@ -63,5 +70,6 @@ def test_iter_csv_chunks_matches_full_read(tmp_path, rng):
 
 
 def test_count_missing():
+    """Test missing-value counts across columns for numeric and string arrays."""
     assert count_missing(np.array([[1, np.nan], [np.nan, np.nan]])).tolist() == [1, 2]
     assert count_missing(np.array([["a", ""], ["", " "]])).tolist() == [1, 2]
