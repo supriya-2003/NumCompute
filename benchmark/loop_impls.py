@@ -1,7 +1,7 @@
-
 import math
 
 
+# Standardise each column by subtracting its mean and dividing by its standard deviation.
 def standardize_loop(X):
     n, d = len(X), len(X[0])
     out = [[0.0] * d for _ in range(n)]
@@ -13,10 +13,12 @@ def standardize_loop(X):
     return out
 
 
+# Calculate the Euclidean distance between every row in A and every row in B.
 def pairwise_euclidean_loop(A, B):
     return [[math.sqrt(sum((a - b) ** 2 for a, b in zip(ra, rb))) for rb in B] for ra in A]
 
 
+# Apply softmax to each row, converting values into probabilities that sum to 1.
 def softmax_rows_loop(X):
     out = []
     for row in X:
@@ -27,6 +29,7 @@ def softmax_rows_loop(X):
     return out
 
 
+# Calculate the mean and population variance using Welford's algorithm.
 def welford_loop(x):
     n, mean, m2 = 0, 0.0, 0.0
     for v in x:
@@ -37,6 +40,7 @@ def welford_loop(x):
     return mean, m2 / n
 
 
+# Count how many values fall into each histogram bin.
 def histogram_loop(x, bins):
     lo, hi = min(x), max(x)
     width = (hi - lo) / bins
@@ -47,6 +51,7 @@ def histogram_loop(x, bins):
     return counts
 
 
+# Assign ranks in ascending order, giving tied values their average rank.
 def rank_average_loop(x):
     order = sorted(range(len(x)), key=lambda i: x[i])
     ranks = [0.0] * len(x)
@@ -62,10 +67,12 @@ def rank_average_loop(x):
     return ranks
 
 
+# Return the k largest values by sorting the input in descending order.
 def topk_loop(x, k):
     return sorted(x, reverse=True)[:k]
 
 
+# Build a confusion matrix showing the counts of actual and predicted classes.
 def confusion_matrix_loop(y_true, y_pred, n_classes):
     cm = [[0] * n_classes for _ in range(n_classes)]
     for t, p in zip(y_true, y_pred):
@@ -73,6 +80,7 @@ def confusion_matrix_loop(y_true, y_pred, n_classes):
     return cm
 
 
+# Convert category values into one-hot encoded rows.
 def one_hot_loop(col, categories):
     index = {c: i for i, c in enumerate(categories)}
     out = []
@@ -83,6 +91,7 @@ def one_hot_loop(col, categories):
     return out
 
 
+# Calculate a percentile using linear interpolation between sorted values.
 def percentile_loop(x, q):
     s = sorted(x)
     pos = q / 100 * (len(s) - 1)

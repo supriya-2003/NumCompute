@@ -164,5 +164,7 @@ Environment: Python 3.13, NumPy 2.5.3, Linux x86_64, 2 vCPUs. The full table wit
 * The reference estimators in `pipeline.py` demonstrate the fit/predict protocol and are not tuned ML models.
 
 ## Authors
-
-<!-- Add team member names and student IDs here -->
+* Sai Datta kamal Ashwin
+* Supriya Gopal
+* Harsh Shail Joshi
+* Siri Tummala
