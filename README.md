@@ -163,8 +163,11 @@ Environment: Python 3.13, NumPy 2.5.3, Linux x86_64, 2 vCPUs. The full table wit
 * `rank(..., axis=k)` on N-D input runs the vectorised 1-D kernel once per slice through `np.apply_along_axis`.
 * The reference estimators in `pipeline.py` demonstrate the fit/predict protocol and are not tuned ML models.
 
-## Authors
-* Sai Datta kamal Ashwin
-* Supriya Gopal
-* Harsh Shail Joshi
-* Siri Tummala
+## Authors and contributions
+
+| Member | Contribution focus | Main work |
+|---|---|---|
+| Sai Datta Kamal Ashwin | Numerical implementation and vectorisation | Vectorised NumPy implementations using array operations, broadcasting and matrix calculations to remove unnecessary loops, e.g. pairwise distances, preprocessing and top-k selection. |
+| Supriya Gopal | Module integration, API consistency and review | Bringing the modules together into one package; keeping inputs, outputs and error handling consistent across modules; reviewing the package as a whole. |
+| Harsh Shail Joshi | Testing, edge cases and correctness checks | Unit tests for ordinary and edge cases (empty inputs, repeated values, mismatched shapes, constant-valued features, invalid parameters) and checks of error behaviour. |
+| Siri Tummala | Benchmarking, documentation and performance evidence | Loop-versus-vectorised benchmarks, performance results and documentation. |
